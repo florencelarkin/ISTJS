@@ -2,6 +2,8 @@
 var timeline = [];
 let pointsFixed = 0;
 let pointsDec = 0;
+let fixedWins = 0;
+let decWins= 0;
 let gridTotal = 25; //5x5 grid with 25 squares
 
 
@@ -39,6 +41,14 @@ function getPoints() {
 
 function getDecPoints() {
     return pointsDec
+}
+
+function getFixedWins() {
+    return fixedWins
+}
+
+function getDecWins() {
+    return decWins
 }
 
 
@@ -79,6 +89,7 @@ var fixed = {
     stimulus: getPattern,
     choices: ['yellow', 'blue'],
     points: getPoints,
+    wins: getFixedWins,
     data: {
         task: 'response',
         points: ''
@@ -87,10 +98,14 @@ var fixed = {
         if (data.answer === 'yellow, 0' && data.response === 0) {
             pointsFixed = pointsFixed + 100;
             data.points = pointsFixed
+            fixedWins++;
+            data.wins = fixedWins
         } 
         else if (data.answer === 'blue, 1' && data.response === 1) {
             pointsFixed = pointsFixed + 100;
             data.points = pointsFixed
+            fixedWins++;
+            data.wins = fixedWins
         }
         else {
             pointsFixed = pointsFixed - 100;
@@ -104,6 +119,7 @@ var decreasing = {
     stimulus: getPattern,
     choices: ['yellow', 'blue'],
     points: getDecPoints, 
+    wins: getDecWins,
     decreasing: true,
     data: {
         task: 'response',
@@ -115,17 +131,22 @@ var decreasing = {
             pointsDec = pointsDec + data.potentialPoints
             console.log(pointsDec)
             data.points = pointsDec
+            decWins++;
+            data.wins = decWins;
         } 
         else if (data.answer === 'blue, 1' && data.response === 1) {
             //give number of points left
             pointsDec = pointsDec + data.potentialPoints
             console.log(pointsDec)
             data.points  = pointsDec
+            decWins++;
+            data.wins = decWins;
         }
         else {
             //if you guess wrong you still lose 100 
             pointsDec = pointsDec - 100;
             data.points = pointsDec
+            
         }
       }
 };
@@ -141,15 +162,16 @@ var end_page = {
   };
 
 var fixed_block = {
-    timeline: [fixed],
-    repetitions: 10,
+    timeline: [fixed_instructions, fixed, fixed, fixed, fixed, fixed, fixed, fixed, fixed, fixed, fixed,]
   };
 
   var decreasing_block = {
-    timeline: [decreasing],
-    repetitions: 10,
+    timeline: [dec_instructions, decreasing, decreasing, decreasing, decreasing, decreasing, decreasing, decreasing, decreasing, decreasing, decreasing,],
   };
-timeline.push(fixed_instructions);
-timeline.push(fixed_block);
-timeline.push(dec_instructions);
-timeline.push(decreasing_block)
+
+//randomize whether fixed win or decreasing win is first
+var block_list = [fixed_block, decreasing_block]
+random_order = block_list.sort(() => Math.random() - 0.5)
+timeline.push(random_order[0], random_order[1], end_page)
+
+

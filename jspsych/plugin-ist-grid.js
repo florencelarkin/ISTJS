@@ -40,6 +40,11 @@ var jsPsychISTGrid = (function (jspsych) {
               pretty_name: "Points",
               default: undefined,
           },
+          wins: {
+            type: jspsych.ParameterType.INT,
+            pretty_name: "Wins",
+            default: undefined,
+        },
           /** How long to show the stimulus. */
           stimulus_duration: {
               type: jspsych.ParameterType.INT,
@@ -81,14 +86,16 @@ var jsPsychISTGrid = (function (jspsych) {
       }
       trial(display_element, trial) {
       // display stimulus
-      let potentialPoints = 250;
+      let potentialPoints = 0;
+      let wins = 0;
+      trial.decreasing === true ? potentialPoints = 250 : potentialPoints = 100;
       var gridSquares = '';
       for (var i = 0; i < trial.stimulus.length; i++) {
       trial.stimulus[i] === 'yellow' ? gridSquares +='<div class="y" id=s' + i + '></div>' : gridSquares +='<div class="b" id=s' + i + '></div>';
       
     }
     
-    var html = '<div id="ist-points">Current Points: ' + trial.points + '&nbsp &nbsp &nbsp Potential Points: '+ potentialPoints + ' </div>' ; 
+    var html = '<div id="ist-points">Wins: ' + trial.wins + '&nbsp &nbsp &nbsp Current Points: ' + trial.points + '&nbsp &nbsp &nbsp Potential Points: '+ potentialPoints + ' </div>' ; 
     html += '<div id="ist-grid"><div class= "grid-container">' + gridSquares + '</div></div>'
       
 
@@ -134,7 +141,7 @@ var jsPsychISTGrid = (function (jspsych) {
 
           function changeText(potentialPoints)
           {
-            document.getElementById('ist-points').innerHTML = 'Current Points: ' + trial.points + '&nbsp &nbsp &nbsp Potential Points: '+ potentialPoints;
+            document.getElementById('ist-points').innerHTML = 'Wins: ' + trial.wins + '&nbsp &nbsp &nbsp Current Points: ' + trial.points + '&nbsp &nbsp &nbsp Potential Points: '+ potentialPoints;
           }
           
           //event listener for squares
@@ -151,11 +158,15 @@ var jsPsychISTGrid = (function (jspsych) {
                 //change the color
                 var color = selectedSquare.getAttribute("class");  
                 color === 'y' ? selectedSquare.style.backgroundColor = '#ffdb47' : selectedSquare.style.backgroundColor = '#44a5d8'
+                if (selectedSquare.getAttribute("disabled") != "disabled"){
+                  trial.decreasing === true ? potentialPoints = potentialPoints - 10 : potentialPoints = 100;
+                  trial.decreasing === true ? changeText(potentialPoints): changeText(potentialPoints);
+                }
+                else {
+
+                }
                 selectedSquare.setAttribute("disabled", "disabled"); //disable square button
-                //if decreasing win condition, subtract points
-                trial.decreasing === true ? potentialPoints = potentialPoints - 10 : potentialPoints = potentialPoints;
-                changeText(potentialPoints);
-                console.log(potentialPoints);
+                //if decreasing win condition, subtract points 
             });
         } 
           // add event listeners to buttons
@@ -190,6 +201,7 @@ var jsPsychISTGrid = (function (jspsych) {
                   pressed: pressedSquares,
                   points: trial.points,
                   potentialPoints: potentialPoints,
+                  decreasing: trial.decreasing,
               };
               // clear the display
               display_element.innerHTML = "";
