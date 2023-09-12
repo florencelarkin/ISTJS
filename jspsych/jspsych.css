@@ -6,7 +6,7 @@ body {
 .responsebutton0 {
   background-color: #ffdb47; 
   border: none;
-  padding: 50px 50px;
+  padding: 10%;
   border-radius: 2px;
   text-align: center;
   text-decoration: none;
@@ -20,7 +20,7 @@ body {
 .responsebutton0:hover {
   background-color: #d4bb58; 
   border: none;
-  padding: 50px 50px;
+  padding: 10%;
   border-radius: 2px;
   text-align: center;
   text-decoration: none;
@@ -34,7 +34,7 @@ body {
 .responsebutton1 {
   background-color: #44a5d8; 
   border: none;
-  padding: 50px 50px;
+  padding: 10%;
   border-radius: 2px;
   text-align: center;
   text-decoration: none;
@@ -48,7 +48,7 @@ body {
 .responsebutton1:hover {
   background-color: #4b93ba; 
   border: none;
-  padding: 50px 50px;
+  padding: 10%;
   border-radius: 2px;
   text-align: center;
   text-decoration: none;
@@ -61,11 +61,12 @@ body {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 100px 100px 100px 100px 100px;
-  grid-template-rows: 100px 100px 100px 100px 100px;
+  grid-template-columns:   1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   padding: 10px;
   margin-bottom: 10px;
   background-color: #666;
+  aspect-ratio: 1;
 }
 .y {
   background-color: gray;
