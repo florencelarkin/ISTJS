@@ -188,7 +188,7 @@ var jsPsychISTGrid = (function (jspsych) {
           };
           // function to end trial when it is time
           const end_trial = () => {
-            console.log(pressedSquares)
+            //console.log(pressedSquares)
               // kill any remaining setTimeout handlers
               this.jsPsych.pluginAPI.clearAllTimeouts();
               // gather the data to store for the trial

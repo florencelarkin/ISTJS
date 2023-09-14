@@ -129,7 +129,7 @@ var decreasing = {
         if (data.answer === 'yellow, 0' && data.response === 0) {
             //give number of points left
             pointsDec = pointsDec + data.potentialPoints
-            console.log(pointsDec)
+            //console.log(pointsDec)
             data.points = pointsDec
             decWins++;
             data.wins = decWins;
@@ -137,7 +137,7 @@ var decreasing = {
         else if (data.answer === 'blue, 1' && data.response === 1) {
             //give number of points left
             pointsDec = pointsDec + data.potentialPoints
-            console.log(pointsDec)
+            //console.log(pointsDec)
             data.points  = pointsDec
             decWins++;
             data.wins = decWins;
