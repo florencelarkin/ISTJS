@@ -52,14 +52,23 @@ function getDecWins() {
 }
 
 
-var fixed_instructions = {
+
+var gen_instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
       <p>In this experiment, you will tap the squares of the grid to reveal the color underneath.
-      </p><p>Your goal is to figure out whether there is a majority of blue or yellow squares.</p>
-      <p>To reveal the squares in the grid, tap on them.</p>
+      </p><p>Your goal is to figure out whether there are more blue or yellow squares.</p>
       <p>When you are ready to choose which color you think is the majority, </p>
-      <p>press the yellow button on the bottom of the screen for yellow or the blue button on the bottom of the screen for blue.</p>
+      <p>press one of the buttons on the bottom of the screen </p>
+      <p>(yellow to guess yellow, blue to guess blue).</p>
+    `,
+    choices: ['NEXT'],
+    post_trial_gap: 2000
+  };
+
+  var fixed_instructions = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
       <p>In this version, you can click as many squares as you want without penalty. If you are correct, you will win 100 points and if you are wrong you will lose 100 points.</p>
       <p>Press 'START' to begin.</p>
     `,
@@ -70,11 +79,6 @@ var fixed_instructions = {
   var dec_instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-    <p>In this experiment, you will tap the squares of the grid to reveal the color underneath.
-    </p><p>Your goal is to figure out whether there is a majority of blue or yellow squares.</p>
-    <p>To reveal the squares in the grid, tap on them.</p>
-    <p>When you are ready to choose which color you think is the majority, </p>
-    <p>press the yellow button on the bottom of the screen for yellow or the blue button on the bottom of the screen for blue.</p>
     <p>In this version, the amount you can win starts at 250 points and decreases for every square you click. So revealing every single box means you don\'t gain any points even if you answer correctly.</p>
     <p>If you are incorrect you still lose 100 points no matter what.</p>
     <p>Press 'START' to begin.</p>
@@ -172,6 +176,6 @@ var fixed_block = {
 //randomize whether fixed win or decreasing win is first
 var block_list = [fixed_block, decreasing_block]
 random_order = block_list.sort(() => Math.random() - 0.5)
-timeline.push(random_order[0], random_order[1], end_page)
+timeline.push(gen_instructions, random_order[0], random_order[1], end_page)
 
 
