@@ -3,6 +3,7 @@
   <head>
     <title>IST</title>
     <script src="./jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-survey-text.js"></script>
     <script src="./jspsych/plugin-html-button-response.js"></script>
     <script src="./jspsych/plugin-html-keyboard-response.js"></script>
     <script src="./jspsych/plugin-ist-grid.js"></script>
@@ -90,7 +91,14 @@ function getDecWins() {
     return decWins
 }
 
-
+//get rid of this if uploading to taskflow
+var id_page = {
+  type: jsPsychSurveyText,
+  questions: [
+    {prompt: 'Participant ID', required: true},
+    {prompt: 'Session NUmber', required: true}
+  ]
+}
 
 var gen_instructions = {
     type: jsPsychHtmlButtonResponse,
@@ -256,7 +264,8 @@ var fixed_block = {
 //randomize whether fixed win or decreasing win is first
 var block_list = [fixed_block, decreasing_block]
 random_order = block_list.sort(() => Math.random() - 0.5)
-timeline.push(gen_instructions, prac_instructions , fixed, practice_points_page, random_order[0], random_order[1])
+//get rid of id page if uploading to taskflow
+timeline.push(id_page, gen_instructions, prac_instructions , fixed, practice_points_page, random_order[0], random_order[1])
 
 
 
